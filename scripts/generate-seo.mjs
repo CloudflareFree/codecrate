@@ -1,7 +1,7 @@
 import { readFile, writeFile, mkdir, access } from "node:fs/promises";
 import ts from "typescript";
 
-const origin = "https://it-toolbox.137101.xyz";
+const origin = "https://codecrate.137101.xyz";
 const escape = (value) =>
   String(value).replace(
     /[&<>"']/g,
@@ -36,7 +36,7 @@ const link = (tool) =>
 const routes = [
   {
     path: "/",
-    title: `IT Toolbox — ${toolRegistry.length} 个开发者工具，一站搞定`,
+    title: `CodeCrate — ${toolRegistry.length} 个开发者工具，一站搞定`,
     description: `${toolRegistry.length} 个开发者工具，覆盖格式化、编解码、加密哈希、网络查询与 AI 增强。无需注册，即开即用。`,
     heading: "开发者工具箱：开发小事，一站搞定。",
     body: CATEGORY_ORDER.map(
@@ -49,9 +49,9 @@ const routes = [
   },
   ...CATEGORY_ORDER.map((category) => ({
     path: `/category/${category}`,
-    title: `${CATEGORY_LABELS[category]}工具 — IT Toolbox`,
+    title: `${CATEGORY_LABELS[category]}工具 — CodeCrate`,
     heading: `${CATEGORY_LABELS[category]}工具`,
-    description: `在线使用 IT Toolbox 的${CATEGORY_LABELS[category]}工具，快速完成开发中的常见任务。`,
+    description: `在线使用 CodeCrate 的${CATEGORY_LABELS[category]}工具，快速完成开发中的常见任务。`,
     body: `<ul>${toolRegistry
       .filter((tool) => tool.category === category)
       .map((tool) => `<li>${link(tool)}<p>${escape(tool.description)}</p></li>`)
@@ -59,7 +59,7 @@ const routes = [
   })),
   ...toolRegistry.map((tool) => ({
     path: `/tool/${tool.id}`,
-    title: `${tool.name} — IT Toolbox`,
+    title: `${tool.name} — CodeCrate`,
     heading: tool.name,
     description: tool.description,
     tool,
@@ -75,7 +75,7 @@ const routes = [
   })),
   ...["favorites", "history"].map((id) => ({
     path: `/${id}`,
-    title: `${id === "favorites" ? "我的收藏" : "最近使用"} — IT Toolbox`,
+    title: `${id === "favorites" ? "我的收藏" : "最近使用"} — CodeCrate`,
     heading: id === "favorites" ? "我的收藏" : "最近使用",
     description: "保存在当前浏览器中的个人工具记录。",
     body: "<p>启用 JavaScript 后，可查看保存在当前浏览器中的工具记录。</p>",
@@ -137,7 +137,7 @@ for (const route of routes) {
     "</head>",
     `<script id="page-structured-data" type="application/ld+json">${JSON.stringify(schema).replace(/</g, "\\u003c")}</script></head>`,
   );
-  const fallback = `<main class="seo-fallback" style="max-width:1040px;margin:40px auto;padding:24px;font-family:system-ui;line-height:1.8"><a href="/">IT Toolbox</a><h1>${escape(route.heading)}</h1><p>${escape(route.description)}</p>${route.body}<p>基于 <a href="https://github.com/Zoroaaa/it-toolbox">Zoroaaa/it-toolbox</a>，以 MIT 许可开源。</p></main>`;
+  const fallback = `<main class="seo-fallback" style="max-width:1040px;margin:40px auto;padding:24px;font-family:system-ui;line-height:1.8"><a href="/">CodeCrate</a><h1>${escape(route.heading)}</h1><p>${escape(route.description)}</p>${route.body}<p><a href="/LICENSE.txt">软件许可</a></p></main>`;
   html = html.replace(
     '<div id="root"></div>',
     `<div id="root">${fallback}</div>`,
@@ -156,7 +156,7 @@ await writeFile(
 );
 await writeFile(
   "dist/404.html",
-  '<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>页面不存在 — IT Toolbox</title><body style="font-family:system-ui;padding:10%;background:#f6f8fc;color:#18243c"><h1>这个页面不在工具箱里</h1><p>网址可能已经改变，试试从首页找到你需要的工具。</p><a href="/">返回 IT Toolbox</a></body></html>',
+  '<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>页面不存在 — CodeCrate</title><body style="font-family:system-ui;padding:10%;background:#f6f8fc;color:#18243c"><h1>这个页面不在工具箱里</h1><p>网址可能已经改变，试试从首页找到你需要的工具。</p><a href="/">返回 CodeCrate</a></body></html>',
 );
 console.log(
   `SEO: ${toolRegistry.length} tools, ${CATEGORY_ORDER.length} categories; ${routes.filter((route) => !route.noindex).length} sitemap URLs. Build-time HTML includes the public tool inventory; React enhances it in the browser.`,

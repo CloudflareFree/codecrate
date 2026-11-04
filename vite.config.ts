@@ -10,8 +10,8 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.svg', 'favicon-32x32.png', 'apple-touch-icon.png'],
       manifest: {
-        name: 'IT Toolbox',
-        short_name: 'IT Toolbox',
+        name: 'CodeCrate',
+        short_name: 'CodeCrate',
         description: '开发者工具箱：格式化、编解码、加密哈希、网络查询与 AI 增强',
         theme_color: '#111c31',
         background_color: '#f6f8fc',

@@ -1,6 +1,6 @@
 {
   "app": {
-    "name": "IT Toolbox",
+    "name": "CodeCrate",
     "description": "Developer Toolbox, 150+ Practical Tools",
     "searchPlaceholder": "Search tools..."
   },
@@ -75,7 +75,7 @@
   },
   "pwa": {
     "install": "Install App",
-    "installDescription": "Install IT Toolbox locally for a better experience",
+    "installDescription": "Install CodeCrate locally for a better experience",
     "updateAvailable": "New version available",
     "updateNow": "Update Now",
     "offline": "You are offline"

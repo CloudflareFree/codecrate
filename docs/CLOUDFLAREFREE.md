@@ -1,12 +1,12 @@
 # CloudflareFree 定制版
 
-基于 https://github.com/Zoroaaa/it-toolbox，保留上游 Git 历史与 MIT 许可。当前注册表为 145 个工具、12 个分类；上游 README 的历史统计可能与当前代码不一致。
+保留第三方软件所需版权与 MIT 许可。当前注册表为 145 个工具、12 个分类；上游 README 的历史统计可能与当前代码不一致。
 
 ## 访问与部署
 
-- 正式站点：https://it-toolbox.137101.xyz
-- 代码仓库：https://github.com/CloudflareFree/it-toolbox
-- Pages 项目：`it-toolbox`；默认主机：`it-toolbox-326.pages.dev`
+- 正式站点：https://codecrate.137101.xyz
+- 代码仓库：https://github.com/CloudflareFree/codecrate
+- Pages 项目：`codecrate`（实际默认主机由 Pages 分配）
 - 生产分支：`main`，由 GitHub push 自动构建；构建命令 `pnpm run build`，输出 `dist`。
 - Node 24，pnpm 9.15.9；安装使用 `pnpm install --frozen-lockfile`。
 - Pages Functions 使用 `nodejs_compat`；兼容日期 `2026-11-04`。
@@ -33,7 +33,7 @@ pnpm run pages:dev
 pnpm run verify:site -- http://127.0.0.1:8893
 # 需要 Chromium，其他环境通过 CHROME_BIN 提供可执行文件
 pnpm run verify:browser -- http://127.0.0.1:8893
-# 正式发布后也可将参数改为 https://it-toolbox.137101.xyz
+# 正式发布后也可将参数改为 https://codecrate.137101.xyz
 ```
 
 浏览器检查覆盖搜索/空结果、分类、收藏持久化、Ctrl+K、JSON 格式化及错误、Base64、UUID、主题持久化、375/768/1024/1440px 布局、手机导航、语言切换与 CSP/运行错误。它抽样验证工具功能，不代表逐项验证全部 145 个计算工具。
@@ -47,8 +47,8 @@ pnpm run verify:browser -- http://127.0.0.1:8893
 ```bash
 export GOOGLE_APPLICATION_CREDENTIALS=/secure/path/service-account.json
 export GSC_SITE_URL=sc-domain:137101.xyz
-export GSC_SITEMAP_URL=https://it-toolbox.137101.xyz/sitemap.xml
-export GSC_INSPECTION_URL=https://it-toolbox.137101.xyz/
+export GSC_SITEMAP_URL=https://codecrate.137101.xyz/sitemap.xml
+export GSC_INSPECTION_URL=https://codecrate.137101.xyz/
 pnpm run seo:status
 # 确认正式版本、公开 URL 和 sitemap 正常后，按授权提交一次
 pnpm run seo:submit

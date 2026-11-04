@@ -8,7 +8,7 @@ declare global {
     gtag?: (...args: unknown[]) => void;
   }
 }
-const origin = "https://it-toolbox.137101.xyz";
+const origin = "https://codecrate.137101.xyz";
 
 export function PageMetadata() {
   const pathname = useRouterState({
@@ -24,16 +24,16 @@ export function PageMetadata() {
     const personal = pathname === "/favorites" || pathname === "/history";
     const known = pathname === "/" || Boolean(tool || category || personal);
     const title = tool
-      ? `${tool.name} — IT Toolbox`
+      ? `${tool.name} — CodeCrate`
       : category
-        ? `${category}工具 — IT Toolbox`
+        ? `${category}工具 — CodeCrate`
         : personal
-          ? `${pathname === "/favorites" ? "我的收藏" : "最近使用"} — IT Toolbox`
-          : `IT Toolbox — ${toolRegistry.length} 个开发者工具，一站搞定`;
+          ? `${pathname === "/favorites" ? "我的收藏" : "最近使用"} — CodeCrate`
+          : `CodeCrate — ${toolRegistry.length} 个开发者工具，一站搞定`;
     const description = tool
       ? tool.description
       : category
-        ? `在线使用 IT Toolbox 的${category}工具，快速完成开发中的常见任务。`
+        ? `在线使用 CodeCrate 的${category}工具，快速完成开发中的常见任务。`
         : `${toolRegistry.length} 个开发者工具，覆盖格式化、编解码、加密哈希、网络查询与 AI 增强。无需注册，即开即用。`;
     document.title = title;
     const canonical = `${origin}${pathname === "/" ? "/" : pathname.replace(/\/$/, "")}`;

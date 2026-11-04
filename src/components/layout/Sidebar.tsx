@@ -1,7 +1,6 @@
 import { Link, useRouterState } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 import {
-  ArrowUpRight,
   Boxes,
   Clock3,
   Code2,
@@ -32,7 +31,8 @@ export function Sidebar() {
           </span>
           <span>
             <strong>
-              IT Toolbox<span>.</span>
+              {en ? "CodeCrate" : "码匣"}
+              <span>.</span>
             </strong>
             <small>MADE FOR DEVELOPERS</small>
           </span>
@@ -117,16 +117,10 @@ export function Sidebar() {
               : "多数工具在本地运行，网络与 AI 工具按需联网。"}
           </p>
         </div>
-        <a
-          className="sidebar-source"
-          href="https://github.com/CloudflareFree/it-toolbox"
-          target="_blank"
-          rel="noreferrer"
-        >
+        <div className="sidebar-source">
           <Code2 size={17} />
-          <span>{en ? "Open source on GitHub" : "在 GitHub 查看源码"}</span>
-          <ArrowUpRight size={14} />
-        </a>
+          <span>{en ? "Quick search · Ctrl + K" : "快捷搜索 · Ctrl + K"}</span>
+        </div>
         <span className="sidebar-version">
           <span />
           v1.0 <i>·</i> {en ? "Keep building." : "为每一位开发者而造"}

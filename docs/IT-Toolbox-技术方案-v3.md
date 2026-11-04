@@ -19,7 +19,7 @@ TypeScript·React·Hono·Cloudflare Pages Functions
 | KV写入用途 | 仅缓存 | 移除限流计数器后,KV只写缓存数据,日写入量极低,免费 配额绰绰有余 |
 
 #### 2. 项目概述
-IT Toolbox是面向开发者的在线工具箱，集成150+高频开发工具。基于Cloudflare Pages Functions全栈部署，前后端同域，无需传统服务器，全球边缘节点低延迟响应。
+CodeCrate是面向开发者的在线工具箱，集成150+高频开发工具。基于Cloudflare Pages Functions全栈部署，前后端同域，无需传统服务器，全球边缘节点低延迟响应。
 
 | 特性 | 说明 |
 | :--- | :--- |

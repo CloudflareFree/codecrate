@@ -60,13 +60,11 @@ export function HomePage() {
   const displayed = filtered ? results : popular;
   const browse = () => {
     setShowAll(true);
-    document
-      .getElementById("discover-tools")
-      ?.scrollIntoView({
-        behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
-          ? "instant"
-          : "smooth",
-      });
+    document.getElementById("discover-tools")?.scrollIntoView({
+      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+        ? "instant"
+        : "smooth",
+    });
     document.getElementById("tool-search")?.focus({ preventScroll: true });
   };
   return (
@@ -161,9 +159,8 @@ export function HomePage() {
               </div>
               <pre>
                 <span>{"{"}</span>
-                {"\n"} <b>"name"</b>: <em>"IT Toolbox"</em>,{"\n"}{" "}
-                <b>"tools"</b>:{" "}
-                <span className="code-number">{toolRegistry.length}</span>,
+                {"\n"} <b>"name"</b>: <em>"CodeCrate"</em>,{"\n"} <b>"tools"</b>
+                : <span className="code-number">{toolRegistry.length}</span>,
                 {"\n"} <b>"madeFor"</b>: <em>"developers"</em>,{"\n"}{" "}
                 <b>"lessBusywork"</b>: <span className="code-bool">true</span>,
                 {"\n"} <b>"moreCreating"</b>:{" "}
@@ -377,18 +374,12 @@ export function HomePage() {
       </section>
       <footer className="workspace-footer">
         <span>
-          IT Toolbox <i>·</i>{" "}
+          CodeCrate <i>·</i>{" "}
           {en ? "Built for your flow." : "让开发，顺手一点。"}
         </span>
-        <a
-          href="https://github.com/Zoroaaa/it-toolbox"
-          target="_blank"
-          rel="noreferrer"
-        >
-          {en
-            ? "Based on Zoroaaa/it-toolbox · MIT"
-            : "基于 Zoroaaa/it-toolbox · MIT 开源"}
-        </a>
+        <span>
+          {en ? "Made for everyday development." : "码匣 · 开发者的日常工具箱"}
+        </span>
       </footer>
     </div>
   );

@@ -1,10 +1,10 @@
 # 部署文档
 
-本文档详细描述 IT Toolbox 的部署流程，包含环境要求、部署步骤、配置说明及常见问题处理。
+本文档详细描述 CodeCrate 的部署流程，包含环境要求、部署步骤、配置说明及常见问题处理。
 
 ## 1. 部署概述
 
-IT Toolbox 采用 Cloudflare Pages Functions 全栈部署方案，具有以下特点：
+CodeCrate 采用 Cloudflare Pages Functions 全栈部署方案，具有以下特点：
 
 | 特性 | 说明 |
 |------|------|

@@ -1,5 +1,5 @@
 {
-  "name": "it-toolbox",
+  "name": "codecrate",
   "version": "1.0.0",
   "private": true,
   "packageManager": "pnpm@9.15.9",
@@ -10,7 +10,7 @@
     "pages:dev": "wrangler pages dev dist --compatibility-date=2026-11-04 --compatibility-flag=nodejs_compat --port 8893",
     "typecheck": "tsc --noEmit",
     "lint": "eslint src packages --ext .ts,.tsx",
-    "deploy": "pnpm run build && wrangler pages deploy dist --project-name=it-toolbox --branch=main",
+    "deploy": "pnpm run build && wrangler pages deploy dist --project-name=codecrate --branch=main",
     "lint:fix": "eslint src packages --ext .ts,.tsx --fix",
     "verify:site": "node scripts/verify-site.mjs",
     "verify:browser": "node scripts/verify-browser.mjs",

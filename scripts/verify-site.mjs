@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict'
 
 const base = process.argv[2] || 'http://127.0.0.1:8893'
-const origin = 'https://it-toolbox.137101.xyz'
+const origin = 'https://codecrate.137101.xyz'
 const get = async path => {
   const response = await fetch(new URL(path, base), { signal: AbortSignal.timeout(30_000) })
   return { response, body: await response.text() }

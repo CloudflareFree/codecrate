@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useRouterState } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
-import { Search, Command, Menu, ChevronRight, Code2 } from "lucide-react";
+import { Search, Command, Menu, ChevronRight } from "lucide-react";
 import {
   Command as Cmd,
   CommandInput,
@@ -90,15 +90,6 @@ export function Header() {
         </button>
 
         <div className="header-actions">
-          <a
-            href="https://github.com/CloudflareFree/it-toolbox"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="header-icon"
-            aria-label={t("header.github")}
-          >
-            <Code2 size={19} />
-          </a>
           <LanguageToggle />
           <ThemeToggle />
         </div>
