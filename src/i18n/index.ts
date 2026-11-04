@@ -14,6 +14,7 @@ i18n
   .use(initReactI18next)
   .init({
     resources,
+    lng: localStorage.getItem('it-toolbox-language') || 'zh-CN',
     fallbackLng: 'zh-CN',
     supportedLngs: ['zh-CN', 'en-US'],
     interpolation: {

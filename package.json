@@ -2,16 +2,21 @@
   "name": "it-toolbox",
   "version": "1.0.0",
   "private": true,
-  "packageManager": "pnpm@9.0.0",
+  "packageManager": "pnpm@9.15.9",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build && node scripts/generate-seo.mjs",
     "preview": "vite preview",
-    "pages:dev": "wrangler pages dev dist --compatibility-date=2024-11-01 --port 8788",
+    "pages:dev": "wrangler pages dev dist --compatibility-date=2026-11-04 --compatibility-flag=nodejs_compat --port 8893",
     "typecheck": "tsc --noEmit",
     "lint": "eslint src packages --ext .ts,.tsx",
-    "deploy": "pnpm run build && wrangler pages deploy dist --project-name=it-toolbox",
-    "lint:fix": "eslint src packages --ext .ts,.tsx --fix"
+    "deploy": "pnpm run build && wrangler pages deploy dist --project-name=it-toolbox --branch=main",
+    "lint:fix": "eslint src packages --ext .ts,.tsx --fix",
+    "verify:site": "node scripts/verify-site.mjs",
+    "verify:browser": "node scripts/verify-browser.mjs",
+    "seo:submit": "node scripts/search-console.mjs submit",
+    "seo:status": "node scripts/search-console.mjs status",
+    "seo:inspect": "node scripts/search-console.mjs inspect"
   },
   "dependencies": {
     "@faker-js/faker": "^9.0.0",
@@ -91,7 +96,10 @@
     "typescript-eslint": "^8.0.0",
     "vite": "^6.0.0",
     "vite-plugin-pwa": "^1.2.0",
-    "workbox-window": "^7.4.0",
-    "wrangler": "^3.0.0"
-  }
+    "workbox-window": "^7.4.0"
+  },
+  "optionalDependencies": {
+    "wrangler": "^4.157.0"
+  },
+  "type": "module"
 }

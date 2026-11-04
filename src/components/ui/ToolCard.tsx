@@ -1,53 +1,61 @@
-import { Link } from '@tanstack/react-router'
-import { useTranslation } from 'react-i18next'
-import { Star } from 'lucide-react'
-import type { ToolMeta } from '@toolbox/types/tool'
-import { useAppStore } from '@/store/app'
-import { getIconComponent } from '@/utils/icons'
-import { usePreloadTool } from '@/hooks/usePreloadTool'
+import { Link } from "@tanstack/react-router";
+import { useTranslation } from "react-i18next";
+import { ArrowUpRight, Star } from "lucide-react";
+import type { ToolMeta } from "@toolbox/types/tool";
+import { useAppStore } from "@/store/app";
+import { getIconComponent } from "@/utils/icons";
+import { usePreloadTool } from "@/hooks/usePreloadTool";
 
-interface ToolCardProps {
-  tool: ToolMeta
-}
-
-export function ToolCard({ tool }: ToolCardProps) {
-  const { t } = useTranslation()
-  const { isFavorited, toggleFavorite } = useAppStore()
-  const favorited = isFavorited(tool.id)
-  const IconComp = getIconComponent(tool.icon)
-  const { preload } = usePreloadTool(tool.id)
-
+export function ToolCard({ tool }: { tool: ToolMeta }) {
+  const { t, i18n } = useTranslation();
+  const en = i18n.language.startsWith("en");
+  const toggleFavorite = useAppStore((s) => s.toggleFavorite);
+  const favorited = useAppStore((s) => s.favorites.includes(tool.id));
+  const Icon = getIconComponent(tool.icon);
+  const { preload } = usePreloadTool(tool.id);
   return (
-    <Link
-      to="/tool/$id"
-      params={{ id: tool.id }}
-      className="card p-4 group flex flex-col gap-3 cursor-pointer"
+    <article
+      className={`tool-card tone-${tool.category}`}
       onMouseEnter={preload}
-      onTouchStart={preload}
     >
-      <div className="flex items-start justify-between">
-        <div className="w-9 h-9 rounded-lg bg-accent/8 border border-accent/15 flex items-center justify-center group-hover:bg-accent/15 transition-colors duration-150">
-          {IconComp && <IconComp className="w-4 h-4 text-accent" />}
-        </div>
-        <div className="flex items-center gap-1.5">
-          {tool.isNew && <span className="badge text-xs">{t('toolCard.new')}</span>}
-          <button
-            onClick={e => { e.preventDefault(); toggleFavorite(tool.id) }}
-            className="opacity-0 group-hover:opacity-100 transition-opacity duration-150 p-1 rounded hover:bg-bg-overlay"
-          >
-            <Star className={`w-3.5 h-3.5 ${favorited ? 'fill-accent text-accent' : 'text-text-muted'}`} />
-          </button>
-        </div>
+      <div className="tool-card-top">
+        <span className="tool-icon">
+          {Icon && <Icon size={22} strokeWidth={1.8} />}
+        </span>
+        <button
+          className={`favorite-button ${favorited ? "is-favorite" : ""}`}
+          onClick={() => toggleFavorite(tool.id)}
+          aria-label={`${favorited ? (en ? "Unfavorite" : "取消收藏") : en ? "Favorite" : "收藏"} ${en ? tool.nameEn : tool.name}`}
+          aria-pressed={favorited}
+        >
+          <Star size={17} fill={favorited ? "currentColor" : "none"} />
+        </button>
       </div>
-
-      <div>
-        <h3 className="text-sm font-medium text-text-primary group-hover:text-accent transition-colors duration-150">
-          {tool.name}
+      <Link
+        to="/tool/$id"
+        params={{ id: tool.id }}
+        onFocus={preload}
+        className="tool-card-link"
+      >
+        <h3>
+          {en ? tool.nameEn : tool.name}
+          <ArrowUpRight size={17} />
         </h3>
-        <p className="text-xs text-text-muted mt-0.5 line-clamp-2 leading-relaxed">
-          {tool.description}
-        </p>
+        <p>{tool.description}</p>
+      </Link>
+      <div className="tool-card-bottom">
+        <span>{t(`categories.${tool.category}`)}</span>
+        <span className={tool.requiresApi ? "mode-network" : "mode-local"}>
+          <i />
+          {tool.requiresApi
+            ? en
+              ? "Online"
+              : "联网工具"
+            : en
+              ? "In your browser"
+              : "浏览器运行"}
+        </span>
       </div>
-    </Link>
-  )
+    </article>
+  );
 }

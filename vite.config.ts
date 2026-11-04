@@ -12,9 +12,9 @@ export default defineConfig({
       manifest: {
         name: 'IT Toolbox',
         short_name: 'IT Toolbox',
-        description: '开发者工具箱，150+ 实用工具',
-        theme_color: '#10b981',
-        background_color: '#0f172a',
+        description: '开发者工具箱：格式化、编解码、加密哈希、网络查询与 AI 增强',
+        theme_color: '#111c31',
+        background_color: '#f6f8fc',
         display: 'standalone',
         orientation: 'portrait-primary',
         scope: '/',
@@ -54,7 +54,7 @@ export default defineConfig({
       workbox: {
         globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2}'],
         navigateFallback: '/index.html',
-        navigateFallbackDenylist: [/^\/api/],
+        navigateFallbackDenylist: [/^\/api/, /^\/(sitemap\.xml|robots\.txt)$/],
         maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
         runtimeCaching: [
           {

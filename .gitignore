@@ -14,3 +14,9 @@ package-lock.json
 
 # Fork 用户本地配置文件（不应提交）
 wrangler.toml
+# Local credentials and development secrets
+.dev.vars
+.dev.vars.*
+.env.*
+*-service-account*.json
+*.log

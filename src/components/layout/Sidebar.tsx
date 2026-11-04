@@ -1,176 +1,156 @@
-import { Link, useRouterState } from '@tanstack/react-router'
-import { useTranslation } from 'react-i18next'
-import { Wrench, X } from 'lucide-react'
-import { CATEGORY_ICONS, CATEGORY_ORDER } from '@toolbox/types/tool'
-import { toolRegistry } from '@/registry'
-import { getIconComponent } from '@/utils/icons'
-import { useAppStore } from '@/store/app'
-
-const categories = CATEGORY_ORDER
+import { Link, useRouterState } from "@tanstack/react-router";
+import { useTranslation } from "react-i18next";
+import {
+  ArrowUpRight,
+  Boxes,
+  Clock3,
+  Code2,
+  LayoutGrid,
+  ShieldCheck,
+  Star,
+  X,
+} from "lucide-react";
+import { CATEGORY_ICONS, CATEGORY_ORDER } from "@toolbox/types/tool";
+import { toolRegistry } from "@/registry";
+import { getIconComponent } from "@/utils/icons";
+import { useAppStore } from "@/store/app";
+import { useDialogFocus } from "@/hooks/useDialogFocus";
 
 export function Sidebar() {
-  const { t } = useTranslation()
-  const routerState = useRouterState()
-  const pathname = routerState.location.pathname
-  const { favorites, mobileMenuOpen, setMobileMenuOpen } = useAppStore()
-
-  const handleNavClick = () => {
-    if (window.innerWidth < 1024) {
-      setMobileMenuOpen(false)
-    }
-  }
-
-  return (
+  const { t, i18n } = useTranslation();
+  const en = i18n.language.startsWith("en");
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const { favorites, mobileMenuOpen, setMobileMenuOpen } = useAppStore();
+  const close = () => setMobileMenuOpen(false);
+  const dialogRef = useDialogFocus<HTMLElement>(mobileMenuOpen, close);
+  const contents = (
     <>
-      <aside className="hidden lg:flex w-56 flex-shrink-0 flex-col bg-bg-surface border-r border-border-base h-screen sticky top-0 overflow-y-auto">
-        <div className="px-4 py-5 border-b border-border-base">
-          <Link to="/" className="flex items-center gap-2.5 group">
-            <div className="w-8 h-8 rounded-lg bg-accent flex items-center justify-center">
-              <Wrench className="w-4 h-4 text-bg-base" />
-            </div>
-            <span className="font-semibold text-text-primary font-mono tracking-tight">
-              IT Toolbox
-            </span>
-          </Link>
-        </div>
-
-        <nav className="flex-1 px-2 py-3 space-y-0.5">
-          <NavItem to="/" label={t('sidebar.allTools')} icon="LayoutGrid" active={pathname === '/'} count={toolRegistry.length} onClick={handleNavClick} />
-          <NavItem to="/favorites" label={t('sidebar.favorites')} icon="Star" active={pathname === '/favorites'} count={favorites.length} onClick={handleNavClick} />
-          <NavItem to="/history" label={t('sidebar.recent')} icon="Clock" active={pathname === '/history'} onClick={handleNavClick} />
-
-          <div className="pt-3 pb-1">
-            <p className="px-3 text-xs font-medium text-text-muted uppercase tracking-wider">{t('nav.allTools')}</p>
-          </div>
-
-          {categories.map(cat => {
-            const IconComp = getIconComponent(CATEGORY_ICONS[cat])
-            const count = toolRegistry.filter(t => t.category === cat).length
-            const isActive = pathname === `/category/${cat}`
-            return (
-              <Link
-                key={cat}
-                to="/category/$name"
-                params={{ name: cat }}
-                onClick={handleNavClick}
-                className={`flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm transition-all duration-100 group
-                  ${isActive
-                    ? 'bg-accent/10 text-accent'
-                    : 'text-text-secondary hover:text-text-primary hover:bg-bg-raised'
-                  }`}
-              >
-                {IconComp && <IconComp className="w-4 h-4 flex-shrink-0" />}
-                <span className="flex-1 truncate">{t(`categories.${cat}`)}</span>
-                <span className={`text-xs tabular-nums ${isActive ? 'text-accent/60' : 'text-text-muted'}`}>
-                  {count}
-                </span>
-              </Link>
-            )
-          })}
-        </nav>
-
-        <div className="px-4 py-3 border-t border-border-base">
-          <p className="text-xs text-text-muted">
-            {toolRegistry.length} {t('nav.allTools').toLowerCase()}
+      <div className="sidebar-brand">
+        <Link to="/" onClick={close}>
+          <span className="brand-mark">
+            <Boxes size={23} />
+          </span>
+          <span>
+            <strong>
+              IT Toolbox<span>.</span>
+            </strong>
+            <small>MADE FOR DEVELOPERS</small>
+          </span>
+        </Link>
+        <button
+          className="lg:hidden sidebar-close"
+          onClick={close}
+          aria-label={en ? "Close menu" : "关闭菜单"}
+        >
+          <X size={20} />
+        </button>
+      </div>
+      <nav
+        className="sidebar-nav"
+        aria-label={en ? "Main navigation" : "主导航"}
+      >
+        <p className="sidebar-section-label">
+          {en ? "WORKSPACE" : "我的工作台"}
+        </p>
+        <Link
+          to="/"
+          onClick={close}
+          className={`sidebar-nav-item ${pathname === "/" ? "active" : ""}`}
+          aria-current={pathname === "/" ? "page" : undefined}
+        >
+          <LayoutGrid size={18} />
+          <span>{t("sidebar.allTools")}</span>
+          <small>{toolRegistry.length}</small>
+        </Link>
+        <Link
+          to="/favorites"
+          onClick={close}
+          className={`sidebar-nav-item ${pathname === "/favorites" ? "active" : ""}`}
+          aria-current={pathname === "/favorites" ? "page" : undefined}
+        >
+          <Star size={18} />
+          <span>{t("sidebar.favorites")}</span>
+          {favorites.length > 0 && <small>{favorites.length}</small>}
+        </Link>
+        <Link
+          to="/history"
+          onClick={close}
+          className={`sidebar-nav-item ${pathname === "/history" ? "active" : ""}`}
+          aria-current={pathname === "/history" ? "page" : undefined}
+        >
+          <Clock3 size={18} />
+          <span>{t("sidebar.recent")}</span>
+        </Link>
+        <p className="sidebar-section-label categories-label">
+          {en ? "TOOL CATEGORIES" : "工具分类"}
+        </p>
+        {CATEGORY_ORDER.map((cat) => {
+          const Icon = getIconComponent(CATEGORY_ICONS[cat]);
+          const active = pathname === `/category/${cat}`;
+          return (
+            <Link
+              key={cat}
+              to="/category/$name"
+              params={{ name: cat }}
+              onClick={close}
+              className={`sidebar-nav-item ${active ? "active" : ""}`}
+              aria-current={active ? "page" : undefined}
+            >
+              {Icon && <Icon size={18} />}
+              <span>{t(`categories.${cat}`)}</span>
+              <small>
+                {toolRegistry.filter((tool) => tool.category === cat).length}
+              </small>
+            </Link>
+          );
+        })}
+      </nav>
+      <div className="sidebar-bottom">
+        <div className="sidebar-tip">
+          <ShieldCheck size={18} />
+          <strong>
+            {en ? "Your work stays yours." : "安心处理，专注创造。"}
+          </strong>
+          <p>
+            {en
+              ? "Most tools run locally. Network & AI tools connect when needed."
+              : "多数工具在本地运行，网络与 AI 工具按需联网。"}
           </p>
         </div>
-      </aside>
-
+        <a
+          className="sidebar-source"
+          href="https://github.com/CloudflareFree/it-toolbox"
+          target="_blank"
+          rel="noreferrer"
+        >
+          <Code2 size={17} />
+          <span>{en ? "Open source on GitHub" : "在 GitHub 查看源码"}</span>
+          <ArrowUpRight size={14} />
+        </a>
+        <span className="sidebar-version">
+          <span />
+          v1.0 <i>·</i> {en ? "Keep building." : "为每一位开发者而造"}
+        </span>
+      </div>
+    </>
+  );
+  return (
+    <>
+      <aside className="workspace-sidebar hidden lg:flex">{contents}</aside>
       {mobileMenuOpen && (
-        <div className="lg:hidden fixed inset-0 z-40">
-          <div 
-            className="absolute inset-0 bg-bg-base/60 backdrop-blur-sm"
-            onClick={() => setMobileMenuOpen(false)}
-          />
-          <aside className="absolute left-0 top-0 bottom-0 w-72 max-w-[85vw] bg-bg-surface border-r border-border-base flex flex-col animate-slide-in-left shadow-theme-lg">
-            <div className="px-4 py-5 border-b border-border-base flex items-center justify-between">
-              <Link to="/" onClick={handleNavClick} className="flex items-center gap-2.5 group">
-                <div className="w-8 h-8 rounded-lg bg-accent flex items-center justify-center">
-                  <Wrench className="w-4 h-4 text-bg-base" />
-                </div>
-                <span className="font-semibold text-text-primary font-mono tracking-tight">
-                  IT Toolbox
-                </span>
-              </Link>
-              <button
-                onClick={() => setMobileMenuOpen(false)}
-                className="flex items-center justify-center w-8 h-8 rounded-lg text-text-secondary hover:text-text-primary hover:bg-bg-raised transition-colors"
-                aria-label={t('common.close')}
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-
-            <nav className="flex-1 px-2 py-3 space-y-0.5 overflow-y-auto">
-              <NavItem to="/" label={t('sidebar.allTools')} icon="LayoutGrid" active={pathname === '/'} count={toolRegistry.length} onClick={handleNavClick} />
-              <NavItem to="/favorites" label={t('sidebar.favorites')} icon="Star" active={pathname === '/favorites'} count={favorites.length} onClick={handleNavClick} />
-              <NavItem to="/history" label={t('sidebar.recent')} icon="Clock" active={pathname === '/history'} onClick={handleNavClick} />
-
-              <div className="pt-3 pb-1">
-                <p className="px-3 text-xs font-medium text-text-muted uppercase tracking-wider">{t('nav.allTools')}</p>
-              </div>
-
-              {categories.map(cat => {
-                const IconComp = getIconComponent(CATEGORY_ICONS[cat])
-                const count = toolRegistry.filter(t => t.category === cat).length
-                const isActive = pathname === `/category/${cat}`
-                return (
-                  <Link
-                    key={cat}
-                    to="/category/$name"
-                    params={{ name: cat }}
-                    onClick={handleNavClick}
-                    className={`flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm transition-all duration-100 group
-                      ${isActive
-                        ? 'bg-accent/10 text-accent'
-                        : 'text-text-secondary hover:text-text-primary hover:bg-bg-raised'
-                      }`}
-                  >
-                    {IconComp && <IconComp className="w-4 h-4 flex-shrink-0" />}
-                    <span className="flex-1 truncate">{t(`categories.${cat}`)}</span>
-                    <span className={`text-xs tabular-nums ${isActive ? 'text-accent/60' : 'text-text-muted'}`}>
-                      {count}
-                    </span>
-                  </Link>
-                )
-              })}
-            </nav>
-
-            <div className="px-4 py-3 border-t border-border-base">
-              <p className="text-xs text-text-muted">
-                {toolRegistry.length} {t('nav.allTools').toLowerCase()}
-              </p>
-            </div>
+        <div className="mobile-sidebar lg:hidden">
+          <div className="sidebar-backdrop" onClick={close} />
+          <aside
+            className="workspace-sidebar"
+            ref={dialogRef}
+            role="dialog"
+            aria-modal="true"
+            aria-label={en ? "Navigation menu" : "导航菜单"}
+          >
+            {contents}
           </aside>
         </div>
       )}
     </>
-  )
-}
-
-function NavItem({
-  to, label, icon, active, count, onClick
-}: {
-  to: string; label: string; icon: string; active: boolean; count?: number; onClick?: () => void
-}) {
-  const IconComp = getIconComponent(icon)
-  return (
-    <Link
-      to={to}
-      onClick={onClick}
-      className={`flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm transition-all duration-100
-        ${active
-          ? 'bg-accent/10 text-accent'
-          : 'text-text-secondary hover:text-text-primary hover:bg-bg-raised'
-        }`}
-    >
-      {IconComp && <IconComp className="w-4 h-4 flex-shrink-0" />}
-      <span className="flex-1">{label}</span>
-      {count !== undefined && count > 0 && (
-        <span className={`text-xs tabular-nums ${active ? 'text-accent/60' : 'text-text-muted'}`}>
-          {count}
-        </span>
-      )}
-    </Link>
-  )
+  );
 }

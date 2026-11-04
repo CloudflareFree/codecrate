@@ -1,5 +1,7 @@
 # IT Toolbox
 
+> CloudflareFree 定制版：[在线使用](https://it-toolbox.137101.xyz) · [部署与验证记录](docs/CLOUDFLAREFREE.md)。基于 [Zoroaaa/it-toolbox](https://github.com/Zoroaaa/it-toolbox)，保留原项目 MIT 许可与 Git 历史；当前注册表包含 145 个工具、12 个分类。下方保留上游项目介绍，历史统计以注册表为准。
+
 <div align="center">
 
 **开发者工具箱** — 146 款实用工具，基于 Cloudflare Pages Functions 全栈部署

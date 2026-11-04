@@ -6,7 +6,7 @@ export default {
     extend: {
       fontFamily: {
         mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
-        sans: ['Geist', 'system-ui', 'sans-serif'],
+        sans: ['Inter', 'PingFang SC', 'Microsoft YaHei', 'system-ui', 'sans-serif'],
       },
       colors: {
         bg: {
@@ -21,7 +21,7 @@ export default {
           strong: 'var(--border-strong)',
         },
         accent: {
-          DEFAULT: 'var(--accent)',
+          DEFAULT: 'rgb(var(--accent-rgb) / <alpha-value>)',
           dim: 'var(--accent-dim)',
           hover: 'var(--accent-hover)',
         },
