@@ -62,3 +62,7 @@ HTTP 204 只表示提交已接收；pending、零错误或模拟 Googlebot 200 �
 ## 维护与回退
 
 后续推送 main 会触发 Pages Git 构建；每次确认部署触发类型、提交 SHA 与 success，再检查正式域名。保留此前成功部署，出现回归可在 Pages 回退对应部署，并撤销有问题的 Git 提交。后续新增工具以注册表为准自动更新 sitemap，并验证可访问性、内部链接和 robots。网络查询依赖外部服务，AI 依赖 Workers AI 配额和模型可用性。
+
+## AI 模型修复
+
+2026-11-05 线上 Functions 日志确认原模型别名解析到已于 2026-05-30 停用的 `@cf/meta/infire-llama-3.1-8b-instruct`（AiError 5028）。Cloudflare REST API 对旧别名可能走不同映射，REST 成功不能代替实际 AI 绑定验证。已改用当前模型目录中的 `@cf/meta/llama-3.1-8b-instruct-fp8`，并去掉绕过模型类型校验的强制断言。发布后须通过站点 `/api/ai/explain` 实测。
